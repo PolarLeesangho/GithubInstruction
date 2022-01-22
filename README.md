@@ -14,7 +14,7 @@ Github 사용법
 1) 복사해온 상대의 저장소에서 업데이트가 된 사항을 당겨와서 업데이트를 한다.
 
 
-Github (vs code ver) 명령어
+Git (vs code ver) 명령어
 
 - git init 
 빈 git 저장소 만들기
