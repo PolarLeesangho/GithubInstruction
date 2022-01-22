@@ -1,0 +1,100 @@
+git의 관리에서 특정 파일/ 폴더 배제하기
+
+필요가 없는 것
+자동으로 생성되는 파일,
+
+포함 하면 안되는 파일
+보안상 중요한 파일
+.gitignore
+1. .gitignore 파일 생성
+2. gitignore 파일 내에 숨길 파일 명을 적고 저장
+3. git status로 확인
+
+1) 파일이름 적기 file.c
+2) 파일의 위치를 적기 /file.c
+3) 특정 확장자를 무시하기 *c
+4) 특정 확장자 무시에서 예외 만들기!not_ignore_this.c
+5) 파일 또는 폴더와 내용물을 없애기 logs
+6) 폴더와 그 내용만 없애기 logs/
+7) logs 폴더 바로 안의 debug.log와 .c파일들 
+logs/debug.log
+logs/*.c
+8) logs 안에 있는 하위 폴더 전부 포함 logs/**/
+
+
+버전 만들기 준비 
+특정 파일 담기git add 파일 명 
+모든 파일 담기 git add . 
+
+버전 만들기
+git commit
+* VI 입력 모드 진입시
+입력 시작 I
+입력 종료 ESC
+저장 없이 종료 :q
+강제 종료 :q!
+저장하고 종료 :wq
+
+간단 작업 git commit -m "남길 말"
+확인 git log
+
+세밀 확인 git diff
+j : 아래 스크롤
+k : 위로 스크롤
+:q : 닫기 
+
+add와 commit 한번에 하는 법
+git commit - am "메시지" (새로 추가된 파일이 없을 때에만 가능)
+
+
+git에서 버전 되돌리기
+1. Reset
+1) 해당 과거로 이동하고 그 이후의 시점을 삭제한다.
+- git log을 검색해서 가고 싶은 commit 의 일련번호 6자리 정도를 가져온다.
+- git reset --hard 일련번호
+- git reset --hard ->  마지막 커밋으로 이동
+* .git 폴더에 commit들이 저장되기에 
+2. Revert 
+1) 과거 버전과 같은 상태의 새로운 세상을 만든다.
+2) 한번 공유가 된 commit은 이렇게 하는 것이 좋다.
+- git revert 일련번호
+* 충돌 발생시 git rm or git add 한 후에 git revert --continue 한다.
+- git revert --no-commit  일련번호 커밋하지 않고 되돌리기
+
+차원 여러개 만들기
+branch : 분리된 가지 : 다른 차원, 프로젝트를 하나 이상의 모습으로 관리를 해야할 때, 여러 작업들이 각각 독립되어 진행될때
+ex) 실배포용, 테스트서버, 신기능, 코드개선, 긴급 수정 등
+
+-git branch add-coach add-coach라는 브런치 만듬
+- branch 목록 확인 git branch
+- add-coach 브랜치로 이동 git switch add-coach
+- 생성과 이동 git switch -c '브랜치명'
+- 브랜치 삭제 git branch -d "브랜치명"  **강제 삭제시 -D 사용
+- 브랜치 이름 바꾸기 git branch -m '기존명' '변경명'
+- 여러 브랜치의 내역 편하게 보기 git log --all --decorate --oneline --graph
+** 주요 작업은 vscode에서 하고, 검사 및 전체적 확인은 소스코드가 용이하다.
+
+브랜치 병합
+merge : 병합하다, 커밋을 하나 더 생성해서 병합시킨다.
+브랜치의 흔적을 남긴다.
+reset을 통해 되돌릴 수 있다.
+
+rebase : 대상 브랜치에 옮겨 놓는 것들 새로운 커밋을 해놓는 느낌
+한줄 정리(팀원끼리 협업하는 상황에서는 지양해야함)
+뉴 팀에서 main으로 가야함 
+** 이동후 시점이 다른데 merge를 통해 가장 최근으로 이동시켜줘야함
+(merge를 사용하기 때문에 main 브랜치로 이동하여야 한다.
+- git merge new-teams
+
+충돌 해결하기
+같은 위치에 다른 애용이 입력된 상황일 때
+merge 해결하기
+충돌시 어떤 항목을 선택할지 나옴
+-merge 중단하기 git merge --abort  
+
+rebase 충돌 해결
+- rebase 중단하기 git rebase --abort
+- 부분 수정 후 git add . 을 하고 git rebase --continue를 한다.
+(수저을 해도 잔여된 문제가 발생할 수 있다. 하나씩 고쳐나가는 것)
+
+
